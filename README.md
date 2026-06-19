@@ -1,60 +1,76 @@
 # CobrosAI
 
-**CobrosAI** es una maqueta estática de la página de aterrizaje (landing page) para un producto que automatiza y mejora la gestión de cobros usando inteligencia artificial. El proyecto contiene HTML y estilos CSS embebidos que muestran el diseño y la propuesta de valor de la plataforma.
+**CobrosAI** es una maqueta estática de la página de aterrizaje (landing page) para un producto que automatiza y mejora la gestión de cobros usando inteligencia artificial.
 
-## Vista previa / Demo
+Visita el archivo principal: `cobrosai-landing.html` para ver el diseño.
 
-- Archivo principal: `cobrosai-landing.html`
-- Para ver la landing localmente, abre `cobrosai-landing.html` en tu navegador o ejecuta un servidor estático desde la carpeta del repositorio. Por ejemplo:
+Demo local
 
-  ```bash
-  # con Python 3
-  python -m http.server 8000
-  # luego abre http://localhost:8000/cobrosai-landing.html
-  ```
+Para ver la landing localmente:
 
-## Qué incluye este repositorio
+```bash
+# desde la carpeta del repo
+python -m http.server 8000
+# abre http://localhost:8000/cobrosai-landing.html
+```
 
-- `cobrosai-landing.html` — HTML completo con estilos en el head que implementa la landing page (secciones: hero, preview del dashboard, features, precios, testimonios y CTA).
+GitHub Pages
 
-El repositorio actualmente es una maqueta (prototipo estático) pensada para mostrar diseño y contenido; no incluye back-end ni integración con APIs de mensajería o pasarelas de pago.
+Si quieres publicar la landing como sitio estático en GitHub Pages puedes hacerlo de dos maneras:
 
-## Estructura propuesta
+- Opción rápida: añade `index.html` en la raíz (ya incluido) y activa Pages en Settings → Pages → Source: branch `main` / root.
+- Alternativa (recomendado): mueve los archivos a la carpeta `/docs` y selecciona `main / docs` como fuente en Pages.
 
-Si decides evolucionar el proyecto a una aplicación real, una estructura recomendable podría ser:
+Capturas (placeholder)
 
-- /public — archivos estáticos (HTML, CSS, imágenes)
-- /src — código fuente (React/Vue/Svelte u otro framework)
-- /server — backend (APIs, autenticación, envíos de mensajes)
-- /docs — documentación adicional
+![Preview](./screenshots/preview.svg)
 
-## Contribuir
+Contenido del repositorio
 
-Si quieres ayudar a mejorar el diseño o el contenido:
+- `cobrosai-landing.html` — HTML con la landing.
+- `styles.css` — CSS extraído desde el HTML para facilitar edición.
+- `README.md` — este archivo (ES / EN).
+- `LICENSE` — licencia MIT.
+- `CONTRIBUTING.md` — guía para contribuir.
+- `screenshots/preview.svg` — placeholder de captura de pantalla.
+
+Cómo contribuir
 
 1. Haz fork del repositorio.
-2. Crea una rama con tu cambio: `git checkout -b feat/nombre-cambio`.
-3. Haz commits claros y descriptivos.
-4. Abre un Pull Request desde tu fork hacia este repositorio.
+2. Crea una rama nueva: `git checkout -b feat/nombre-cambio`.
+3. Haz tus cambios y commitea con mensajes claros.
+4. Abre un Pull Request describiendo los cambios.
 
-Para cambios rápidos en contenido o correcciones de texto puedes abrir un issue describiendo lo que quieres cambiar.
+Si planeas cambios técnicos (API, integraciones), abre antes un issue para discutir el diseño.
 
-## Desarrollo local
+Licencia
 
-Recomendaciones básicas para trabajar con la maqueta:
+Este proyecto se publica bajo la licencia MIT. Consulta el archivo `LICENSE`.
 
-- Usa un servidor local para probar rutas y recursos (ver comando de Python arriba).
-- Para editar estilos, modifica el bloque `<style>` dentro de `cobrosai-landing.html` o extrae el CSS a un archivo separado `styles.css` en `/public`.
-- Si quieres añadir imágenes, crea una carpeta `public/images` y enlaza las rutas relativas desde el HTML.
+Contacto
 
-## Contacto
-
-Para demo o consultas de producto aparece en la landing el correo: `hola@cobrosai.co`.
-
-## Licencia
-
-La licencia no está definida en este repositorio. Si quieres publicar este proyecto con una licencia, añade un archivo `LICENSE`. Una opción habitual es la licencia MIT.
+Para consultas o demo: `hola@cobrosai.co`
 
 ---
 
-_Archivo generado automáticamente del contenido actual del repositorio._
+EN — English version
+
+# CobrosAI
+
+CobrosAI is a static landing page mockup for a product that automates invoice collection using AI. This repository contains the HTML and CSS for the landing page and simple workflow notes to help you get started.
+
+Preview
+
+Open `cobrosai-landing.html` in your browser or run a local static server (see commands above).
+
+GitHub Pages
+
+To publish the site via GitHub Pages, place files in `/docs` or keep `index.html` at repository root and enable Pages in repository Settings.
+
+Contributing
+
+Please use forks and pull requests. For large changes, open an issue first.
+
+License
+
+MIT — see `LICENSE` for full text.
