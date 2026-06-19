@@ -1,0 +1,608 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.app{display:flex;height:100vh;min-height:600px;background:var(--color-background-tertiary)}
+.sidebar{width:220px;flex-shrink:0;background:var(--color-background-primary);border-right:0.5px solid var(--color-border-tertiary);display:flex;flex-direction:column;padding:1.25rem 0}
+.logo{padding:0 1.25rem 1.5rem;font-size:15px;font-weight:500;color:var(--color-text-primary);display:flex;align-items:center;gap:8px}
+.logo i{font-size:20px;color:#3C3489}
+.nav-item{display:flex;align-items:center;gap:10px;padding:9px 1.25rem;font-size:13.5px;color:var(--color-text-secondary);cursor:pointer;border:none;background:none;width:100%;text-align:left;border-left:2px solid transparent;transition:all .15s}
+.nav-item:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.nav-item.active{color:#3C3489;border-left-color:#3C3489;background:#EEEDFE}
+.nav-item i{font-size:17px}
+.nav-section{font-size:11px;font-weight:500;color:var(--color-text-tertiary);padding:1rem 1.25rem 0.4rem;text-transform:uppercase;letter-spacing:.05em}
+.main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.topbar{background:var(--color-background-primary);border-bottom:0.5px solid var(--color-border-tertiary);padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.topbar-title{font-size:16px;font-weight:500}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.btn{padding:7px 14px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary);cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .15s}
+.btn:hover{background:var(--color-background-secondary)}
+.btn-primary{background:#3C3489;color:#fff;border-color:#3C3489}
+.btn-primary:hover{background:#534AB7}
+.content{padding:1.5rem;flex:1}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:1.5rem}
+.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem}
+.metric-label{font-size:12px;color:var(--color-text-secondary);margin-bottom:6px}
+.metric-value{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.metric-sub{font-size:12px;color:var(--color-text-tertiary);margin-top:4px}
+.metric-value.danger{color:#A32D2D}
+.metric-value.warning{color:#854F0B}
+.metric-value.success{color:#3B6D11}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem}
+.section-title{font-size:14px;font-weight:500}
+.filters{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}
+.filter-btn{padding:5px 12px;font-size:12px;border:0.5px solid var(--color-border-tertiary);border-radius:20px;background:var(--color-background-primary);color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
+.filter-btn.active{background:#EEEDFE;color:#3C3489;border-color:#AFA9EC}
+.table-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th{background:var(--color-background-secondary);padding:10px 14px;text-align:left;font-weight:500;font-size:12px;color:var(--color-text-secondary);border-bottom:0.5px solid var(--color-border-tertiary)}
+td{padding:11px 14px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:var(--color-background-secondary)}
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:500}
+.badge-danger{background:#FCEBEB;color:#A32D2D}
+.badge-warning{background:#FAEEDA;color:#854F0B}
+.badge-success{background:#EAF3DE;color:#3B6D11}
+.badge-info{background:#EEEDFE;color:#3C3489}
+.badge-gray{background:var(--color-background-secondary);color:var(--color-text-secondary)}
+.action-btn{padding:4px 10px;font-size:12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:none;color:var(--color-text-secondary);cursor:pointer;transition:all .15s}
+.action-btn:hover{background:var(--color-background-secondary);color:var(--color-text-primary)}
+.action-btn.ai{border-color:#AFA9EC;color:#534AB7}
+.action-btn.ai:hover{background:#EEEDFE}
+.ai-panel{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);margin-top:1.5rem;overflow:hidden}
+.ai-header{padding:12px 16px;background:#EEEDFE;border-bottom:0.5px solid #CECBF6;display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:#26215C}
+.ai-header i{font-size:16px;color:#534AB7}
+.ai-body{padding:16px}
+.ai-suggestions{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.suggestion-card{border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px;cursor:pointer;transition:all .15s}
+.suggestion-card:hover{border-color:#AFA9EC;background:#EEEDFE}
+.suggestion-title{font-size:12.5px;font-weight:500;margin-bottom:4px}
+.suggestion-text{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.suggestion-badge{font-size:11px;margin-top:8px}
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:100;align-items:center;justify-content:center}
+.modal-bg.open{display:flex}
+.modal{background:var(--color-background-primary);border-radius:var(--border-radius-lg);border:0.5px solid var(--color-border-tertiary);width:480px;max-width:95vw;max-height:90vh;overflow-y:auto}
+.modal-header{padding:16px 20px;border-bottom:0.5px solid var(--color-border-tertiary);display:flex;align-items:center;justify-content:space-between}
+.modal-title{font-size:15px;font-weight:500}
+.modal-close{background:none;border:none;color:var(--color-text-secondary);cursor:pointer;font-size:18px;line-height:1}
+.modal-body{padding:20px}
+.form-group{margin-bottom:14px}
+.form-label{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:5px;display:block}
+.form-input{width:100%;padding:8px 12px;font-size:13px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);background:var(--color-background-primary);color:var(--color-text-primary)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.modal-footer{padding:14px 20px;border-top:0.5px solid var(--color-border-tertiary);display:flex;justify-content:flex-end;gap:8px}
+.ai-compose{background:#EEEDFE;border-radius:var(--border-radius-md);padding:12px;margin-bottom:14px}
+.ai-compose-label{font-size:11px;color:#534AB7;font-weight:500;margin-bottom:6px;display:flex;align-items:center;gap:5px}
+.ai-compose-text{font-size:12.5px;color:#26215C;line-height:1.6}
+.toast{position:fixed;bottom:24px;right:24px;background:#26215C;color:#fff;padding:10px 18px;border-radius:var(--border-radius-md);font-size:13px;z-index:200;display:none;align-items:center;gap:8px;box-shadow:none}
+.toast.show{display:flex}
+.views{display:none}
+.views.active{display:block}
+.empty-state{text-align:center;padding:3rem 1rem;color:var(--color-text-secondary);font-size:13px}
+.client-avatar{width:32px;height:32px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.client-cell{display:flex;align-items:center;gap:10px}
+</style>
+
+<h2 class="sr-only">Panel de gestión de cobros y facturas con recordatorios inteligentes</h2>
+
+<div class="app">
+  <div class="sidebar">
+    <div class="logo"><i class="ti ti-bolt" aria-hidden="true"></i>CobrosAI</div>
+    <div class="nav-section">Principal</div>
+    <button class="nav-item active" onclick="setView('dashboard',this)"><i class="ti ti-layout-dashboard" aria-hidden="true"></i>Panel</button>
+    <button class="nav-item" onclick="setView('facturas',this)"><i class="ti ti-file-invoice" aria-hidden="true"></i>Facturas</button>
+    <button class="nav-item" onclick="setView('clientes',this)"><i class="ti ti-users" aria-hidden="true"></i>Clientes</button>
+    <button class="nav-item" onclick="setView('recordatorios',this)"><i class="ti ti-bell" aria-hidden="true"></i>Recordatorios</button>
+    <div class="nav-section">Análisis</div>
+    <button class="nav-item" onclick="setView('reportes',this)"><i class="ti ti-chart-bar" aria-hidden="true"></i>Reportes</button>
+    <button class="nav-item" onclick="setView('ia',this)"><i class="ti ti-sparkles" aria-hidden="true"></i>Asistente IA</button>
+    <div style="flex:1"></div>
+    <div style="padding:1rem 1.25rem;font-size:12px;color:var(--color-text-tertiary)">
+      <div style="font-weight:500;color:var(--color-text-secondary);margin-bottom:2px">Plan Profesional</div>
+      <div>Yesit Ospina</div>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="page-title">Panel de cobros</div>
+      <div class="topbar-actions">
+        <button class="btn" onclick="openModal('nueva-factura')"><i class="ti ti-plus" aria-hidden="true"></i> Nueva factura</button>
+        <button class="btn btn-primary" onclick="sendAllReminders()"><i class="ti ti-send" aria-hidden="true"></i> Enviar recordatorios IA</button>
+      </div>
+    </div>
+
+    <div class="content">
+
+      <!-- DASHBOARD -->
+      <div id="view-dashboard" class="views active">
+        <div class="metrics">
+          <div class="metric">
+            <div class="metric-label">Por cobrar total</div>
+            <div class="metric-value" id="m-total">$0</div>
+            <div class="metric-sub" id="m-total-sub">cargando...</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Vencido</div>
+            <div class="metric-value danger" id="m-vencido">$0</div>
+            <div class="metric-sub" id="m-vencido-sub">cargando...</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Próximo a vencer</div>
+            <div class="metric-value warning" id="m-proximo">$0</div>
+            <div class="metric-sub" id="m-proximo-sub">cargando...</div>
+          </div>
+          <div class="metric">
+            <div class="metric-label">Cobrado este mes</div>
+            <div class="metric-value success" id="m-cobrado">$0</div>
+            <div class="metric-sub" id="m-cobrado-sub">cargando...</div>
+          </div>
+        </div>
+
+        <div class="section-header">
+          <div class="section-title">Facturas prioritarias</div>
+        </div>
+
+        <div class="filters">
+          <button class="filter-btn active" onclick="filterFacturas('all',this)">Todas</button>
+          <button class="filter-btn" onclick="filterFacturas('vencida',this)">Vencidas</button>
+          <button class="filter-btn" onclick="filterFacturas('proximo',this)">Próximas</button>
+          <button class="filter-btn" onclick="filterFacturas('pendiente',this)">Pendientes</button>
+          <button class="filter-btn" onclick="filterFacturas('pagada',this)">Pagadas</button>
+        </div>
+
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>N° Factura</th>
+                <th>Monto</th>
+                <th>Vencimiento</th>
+                <th>Estado</th>
+                <th>Recordatorio</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="facturas-tbody"></tbody>
+          </table>
+        </div>
+
+        <div class="ai-panel">
+          <div class="ai-header"><i class="ti ti-sparkles" aria-hidden="true"></i> Sugerencias inteligentes de cobro</div>
+          <div class="ai-body">
+            <div class="ai-suggestions" id="ai-suggestions"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FACTURAS -->
+      <div id="view-facturas" class="views">
+        <div class="filters">
+          <button class="filter-btn active" onclick="filterFacturas('all',this)">Todas</button>
+          <button class="filter-btn" onclick="filterFacturas('vencida',this)">Vencidas</button>
+          <button class="filter-btn" onclick="filterFacturas('proximo',this)">Próximas</button>
+          <button class="filter-btn" onclick="filterFacturas('pendiente',this)">Pendientes</button>
+          <button class="filter-btn" onclick="filterFacturas('pagada',this)">Pagadas</button>
+        </div>
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th><th>N° Factura</th><th>Monto</th><th>Vencimiento</th><th>Estado</th><th>Recordatorio</th><th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="facturas-tbody2"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- CLIENTES -->
+      <div id="view-clientes" class="views">
+        <div class="table-card">
+          <table>
+            <thead>
+              <tr><th>Cliente</th><th>Email</th><th>Facturas abiertas</th><th>Monto total</th><th>Puntualidad</th></tr>
+            </thead>
+            <tbody id="clientes-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- RECORDATORIOS -->
+      <div id="view-recordatorios" class="views">
+        <div id="recordatorios-list"></div>
+      </div>
+
+      <!-- REPORTES -->
+      <div id="view-reportes" class="views">
+        <div class="metrics">
+          <div class="metric"><div class="metric-label">Tasa de cobro</div><div class="metric-value success" id="r-tasa">—</div><div class="metric-sub">últimos 90 días</div></div>
+          <div class="metric"><div class="metric-label">Días promedio de pago</div><div class="metric-value" id="r-dias">—</div><div class="metric-sub">desde emisión</div></div>
+          <div class="metric"><div class="metric-label">Clientes morosos</div><div class="metric-value danger" id="r-morosos">—</div><div class="metric-sub">más de 30 días vencido</div></div>
+          <div class="metric"><div class="metric-label">Recordatorios enviados</div><div class="metric-value" id="r-enviados">—</div><div class="metric-sub">este mes</div></div>
+        </div>
+        <div class="table-card" style="margin-top:1rem">
+          <div style="padding:14px 16px;font-size:13px;font-weight:500;border-bottom:0.5px solid var(--color-border-tertiary)">Resumen por cliente</div>
+          <table><thead><tr><th>Cliente</th><th>Facturado</th><th>Cobrado</th><th>Pendiente</th><th>Estado</th></tr></thead><tbody id="reporte-tbody"></tbody></table>
+        </div>
+      </div>
+
+      <!-- ASISTENTE IA -->
+      <div id="view-ia" class="views">
+        <div style="max-width:600px">
+          <div class="table-card" style="margin-bottom:1rem">
+            <div class="ai-header"><i class="ti ti-sparkles" aria-hidden="true"></i> Asistente de cobros con IA</div>
+            <div style="padding:16px" id="ia-chat">
+              <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:1rem">Haz una pregunta sobre tus cobros o pide que redacte un mensaje personalizado.</div>
+            </div>
+            <div style="padding:12px 16px;border-top:0.5px solid var(--color-border-tertiary);display:flex;gap:8px">
+              <input class="form-input" id="ia-input" placeholder="Ej: ¿Quién es mi cliente más moroso?" style="flex:1" onkeydown="if(event.key==='Enter')askAI()">
+              <button class="btn btn-primary" onclick="askAI()"><i class="ti ti-send" aria-hidden="true"></i></button>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <button class="btn" onclick="quickAsk('Redacta un recordatorio amable para el cliente más atrasado')" style="text-align:left;justify-content:flex-start">Redactar recordatorio para cliente más atrasado ↗</button>
+            <button class="btn" onclick="quickAsk('¿Cuáles facturas tienen mayor riesgo de no pagarse?')" style="text-align:left;justify-content:flex-start">Analizar facturas de mayor riesgo ↗</button>
+            <button class="btn" onclick="quickAsk('Dame un resumen ejecutivo de mis cobros del mes')" style="text-align:left;justify-content:flex-start">Resumen ejecutivo del mes ↗</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- MODAL NUEVA FACTURA -->
+<div class="modal-bg" id="modal-nueva-factura">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Nueva factura</div>
+      <button class="modal-close" onclick="closeModal('nueva-factura')"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Cliente</label>
+        <select class="form-input" id="new-client">
+          <option value="">Seleccionar cliente...</option>
+          <option>Café Andino S.A.S</option>
+          <option>TecnoSoluciones Ltda</option>
+          <option>Distribuidora Pacífico</option>
+          <option>AgroExport Colombia</option>
+          <option>Consultora Norte S.A</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Monto (COP)</label>
+          <input class="form-input" id="new-amount" type="number" placeholder="0">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fecha de vencimiento</label>
+          <input class="form-input" id="new-due" type="date">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Concepto</label>
+        <input class="form-input" id="new-concept" placeholder="Descripción del servicio...">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Recordatorio automático</label>
+        <select class="form-input" id="new-reminder">
+          <option>3 días antes del vencimiento</option>
+          <option>7 días antes del vencimiento</option>
+          <option>Al vencer</option>
+          <option>Diario después de vencer</option>
+          <option>Manual</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('nueva-factura')">Cancelar</button>
+      <button class="btn btn-primary" onclick="createFactura()">Crear factura</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL RECORDATORIO IA -->
+<div class="modal-bg" id="modal-recordatorio">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Recordatorio generado por IA</div>
+      <button class="modal-close" onclick="closeModal('recordatorio')"><i class="ti ti-x" aria-hidden="true"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="ai-compose" id="modal-ai-text">
+        <div class="ai-compose-label"><i class="ti ti-sparkles" aria-hidden="true"></i> Mensaje generado</div>
+        <div class="ai-compose-text" id="modal-msg-text">Generando...</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Canal de envío</label>
+        <select class="form-input">
+          <option>Email</option>
+          <option>WhatsApp</option>
+          <option>SMS</option>
+        </select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('recordatorio')">Cancelar</button>
+      <button class="btn btn-primary" onclick="confirmSend()"><i class="ti ti-send" aria-hidden="true"></i> Enviar ahora</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"><i class="ti ti-check" aria-hidden="true"></i><span id="toast-msg">Listo</span></div>
+
+<script>
+const today = new Date();
+function addDays(d,n){const r=new Date(d);r.setDate(r.getDate()+n);return r}
+function fmtDate(d){return d.toLocaleDateString('es-CO',{day:'2-digit',month:'short',year:'numeric'})}
+function fmtCOP(n){return '$'+n.toLocaleString('es-CO')}
+
+const clientes=[
+  {id:1,nombre:'Café Andino S.A.S',email:'pagos@cafeandino.com',color:'#EEEDFE',colorTxt:'#3C3489',puntualidad:'Alta'},
+  {id:2,nombre:'TecnoSoluciones Ltda',email:'admin@tecnosol.co',color:'#E1F5EE',colorTxt:'#0F6E56',puntualidad:'Media'},
+  {id:3,nombre:'Distribuidora Pacífico',email:'gerencia@distpac.com',color:'#FAEEDA',colorTxt:'#854F0B',puntualidad:'Baja'},
+  {id:4,nombre:'AgroExport Colombia',email:'cuentas@agroexport.co',color:'#FAECE7',colorTxt:'#993C1D',puntualidad:'Baja'},
+  {id:5,nombre:'Consultora Norte S.A',email:'finanzas@consulnorte.com',color:'#E6F1FB',colorTxt:'#185FA5',puntualidad:'Alta'},
+];
+
+let facturas=[
+  {id:'F-001',clienteId:3,monto:4800000,vencimiento:addDays(today,-15),estado:'vencida',recordatorios:3,concepto:'Consultoría logística'},
+  {id:'F-002',clienteId:4,monto:12500000,vencimiento:addDays(today,-8),estado:'vencida',recordatorios:2,concepto:'Desarrollo de software'},
+  {id:'F-003',clienteId:2,monto:3200000,vencimiento:addDays(today,3),estado:'proximo',recordatorios:1,concepto:'Mantenimiento mensual'},
+  {id:'F-004',clienteId:1,monto:7600000,vencimiento:addDays(today,7),estado:'proximo',recordatorios:0,concepto:'Servicios de exportación'},
+  {id:'F-005',clienteId:5,monto:2100000,vencimiento:addDays(today,18),estado:'pendiente',recordatorios:0,concepto:'Asesoría financiera'},
+  {id:'F-006',clienteId:1,monto:5400000,vencimiento:addDays(today,-30),estado:'pagada',recordatorios:1,concepto:'Consultoría café especial'},
+  {id:'F-007',clienteId:2,monto:890000,vencimiento:addDays(today,25),estado:'pendiente',recordatorios:0,concepto:'Soporte técnico'},
+];
+
+let currentFilter='all';
+
+function getCliente(id){return clientes.find(c=>c.id===id)}
+
+function estadoBadge(e){
+  const m={vencida:'<span class="badge badge-danger">Vencida</span>',proximo:'<span class="badge badge-warning">Próxima</span>',pendiente:'<span class="badge badge-info">Pendiente</span>',pagada:'<span class="badge badge-success">Pagada</span>'};
+  return m[e]||'';
+}
+
+function renderFacturas(tbody,filter){
+  const t=document.getElementById(tbody);
+  if(!t)return;
+  const list=filter&&filter!='all'?facturas.filter(f=>f.estado===filter):facturas;
+  if(list.length===0){t.innerHTML='<tr><td colspan="7" style="text-align:center;padding:2rem;color:var(--color-text-secondary);font-size:13px">No hay facturas</td></tr>';return}
+  t.innerHTML=list.map(f=>{
+    const c=getCliente(f.clienteId);
+    const initials=c.nombre.split(' ').slice(0,2).map(w=>w[0]).join('');
+    const daysStr=f.estado==='vencida'?`${Math.abs(Math.round((f.vencimiento-today)/86400000))}d vencida`:(f.estado==='proximo'?`en ${Math.round((f.vencimiento-today)/86400000)}d`:'');
+    return `<tr>
+      <td><div class="client-cell"><div class="client-avatar" style="background:${c.color};color:${c.colorTxt}">${initials}</div><div><div style="font-size:13px">${c.nombre}</div><div style="font-size:11px;color:var(--color-text-secondary)">${c.email}</div></div></div></td>
+      <td style="font-family:var(--font-mono);font-size:12px">${f.id}</td>
+      <td style="font-weight:500">${fmtCOP(f.monto)}</td>
+      <td><div>${fmtDate(f.vencimiento)}</div>${daysStr?`<div style="font-size:11px;color:${f.estado==='vencida'?'#A32D2D':'#854F0B'}">${daysStr}</div>`:''}</td>
+      <td>${estadoBadge(f.estado)}</td>
+      <td style="font-size:12px;color:var(--color-text-secondary)">${f.recordatorios} enviado${f.recordatorios!==1?'s':''}</td>
+      <td>${f.estado!=='pagada'?`<button class="action-btn ai" onclick="generateReminder('${f.id}')"><i class="ti ti-sparkles" aria-hidden="true"></i> IA</button> <button class="action-btn" onclick="markPaid('${f.id}')">Cobrado</button>`:'<span style="font-size:12px;color:var(--color-text-tertiary)">—</span>'}</td>
+    </tr>`;
+  }).join('');
+}
+
+function renderMetrics(){
+  const vencidas=facturas.filter(f=>f.estado==='vencida');
+  const proximas=facturas.filter(f=>f.estado==='proximo');
+  const activas=facturas.filter(f=>f.estado!=='pagada');
+  const pagadas=facturas.filter(f=>f.estado==='pagada');
+  const totalAct=activas.reduce((s,f)=>s+f.monto,0);
+  const totalVenc=vencidas.reduce((s,f)=>s+f.monto,0);
+  const totalProx=proximas.reduce((s,f)=>s+f.monto,0);
+  const totalPag=pagadas.reduce((s,f)=>s+f.monto,0);
+  document.getElementById('m-total').textContent=fmtCOP(totalAct);
+  document.getElementById('m-total-sub').textContent=`${activas.length} factura${activas.length!==1?'s':''}`;
+  document.getElementById('m-vencido').textContent=fmtCOP(totalVenc);
+  document.getElementById('m-vencido-sub').textContent=`${vencidas.length} factura${vencidas.length!==1?'s':''} vencidas`;
+  document.getElementById('m-proximo').textContent=fmtCOP(totalProx);
+  document.getElementById('m-proximo-sub').textContent=`${proximas.length} próximas`;
+  document.getElementById('m-cobrado').textContent=fmtCOP(totalPag);
+  document.getElementById('m-cobrado-sub').textContent=`${pagadas.length} pagadas`;
+}
+
+function renderAISuggestions(){
+  const vencidas=facturas.filter(f=>f.estado==='vencida');
+  const proximas=facturas.filter(f=>f.estado==='proximo');
+  const suggestions=[
+    {title:'Cobro urgente requerido',text:`${vencidas.length} facturas llevan más de 7 días vencidas. Enviar recordatorio formal inmediatamente.`,badge:'badge-danger',label:'Urgente',facturaId:vencidas[0]?.id},
+    {title:'Aviso preventivo recomendado',text:`${proximas.length} facturas vencen en menos de 7 días. Un recordatorio amable ahora mejora la tasa de pago.`,badge:'badge-warning',label:'Próximo',facturaId:proximas[0]?.id},
+    {title:'Cliente frecuentemente moroso',text:'Distribuidora Pacífico tiene 2 facturas vencidas. Considera ajustar los términos de pago.'},
+    {title:'Optimizar flujo de caja',text:'Concentra los recordatorios los martes y jueves — tienen mayor tasa de apertura de email.'},
+  ];
+  document.getElementById('ai-suggestions').innerHTML=suggestions.map(s=>`
+    <div class="suggestion-card" onclick="${s.facturaId?`generateReminder('${s.facturaId}')`:''}" style="${s.facturaId?'':'cursor:default'}">
+      <div class="suggestion-title">${s.title}</div>
+      <div class="suggestion-text">${s.text}</div>
+      ${s.label?`<span class="badge ${s.badge} suggestion-badge">${s.label}</span>`:''}
+    </div>`).join('');
+}
+
+function renderClientes(){
+  const t=document.getElementById('clientes-tbody');
+  if(!t)return;
+  t.innerHTML=clientes.map(c=>{
+    const cf=facturas.filter(f=>f.clienteId===c.id&&f.estado!=='pagada');
+    const total=cf.reduce((s,f)=>s+f.monto,0);
+    const initials=c.nombre.split(' ').slice(0,2).map(w=>w[0]).join('');
+    const pBadge={Alta:'badge-success',Media:'badge-warning',Baja:'badge-danger'}[c.puntualidad]||'badge-gray';
+    return `<tr><td><div class="client-cell"><div class="client-avatar" style="background:${c.color};color:${c.colorTxt}">${initials}</div>${c.nombre}</div></td><td style="font-size:12px;color:var(--color-text-secondary)">${c.email}</td><td>${cf.length}</td><td style="font-weight:500">${fmtCOP(total)}</td><td><span class="badge ${pBadge}">${c.puntualidad}</span></td></tr>`;
+  }).join('');
+}
+
+function renderRecordatorios(){
+  const t=document.getElementById('recordatorios-list');
+  if(!t)return;
+  const msgs=[
+    {tipo:'email',cliente:'Distribuidora Pacífico',factura:'F-001',estado:'enviado',fecha:addDays(today,-2),resumen:'Recordatorio de factura vencida — 15 días de mora'},
+    {tipo:'whatsapp',cliente:'AgroExport Colombia',factura:'F-002',estado:'enviado',fecha:addDays(today,-5),resumen:'Segundo aviso — pago pendiente por $12.5M'},
+    {tipo:'email',cliente:'TecnoSoluciones Ltda',factura:'F-003',estado:'programado',fecha:addDays(today,1),resumen:'Aviso preventivo — vence en 3 días'},
+    {tipo:'email',cliente:'Café Andino S.A.S',factura:'F-004',estado:'programado',fecha:addDays(today,3),resumen:'Recordatorio preventivo — vence en 7 días'},
+  ];
+  t.innerHTML='<div class="table-card"><table><thead><tr><th>Canal</th><th>Cliente</th><th>Factura</th><th>Fecha</th><th>Estado</th><th>Resumen</th></tr></thead><tbody>'+
+  msgs.map(m=>{
+    const sb=m.estado==='enviado'?'badge-success':'badge-info';
+    const ci=m.tipo==='email'?'ti-mail':'ti-brand-whatsapp';
+    return `<tr><td><i class="ti ${ci}" aria-hidden="true" style="font-size:16px;color:var(--color-text-secondary)"></i></td><td>${m.cliente}</td><td style="font-family:var(--font-mono);font-size:12px">${m.factura}</td><td style="font-size:12px">${fmtDate(m.fecha)}</td><td><span class="badge ${sb}">${m.estado}</span></td><td style="font-size:12px;color:var(--color-text-secondary)">${m.resumen}</td></tr>`;
+  }).join('')+'</tbody></table></div>';
+}
+
+function renderReportes(){
+  document.getElementById('r-tasa').textContent='78%';
+  document.getElementById('r-dias').textContent='22';
+  document.getElementById('r-morosos').textContent='2';
+  document.getElementById('r-enviados').textContent='14';
+  const t=document.getElementById('reporte-tbody');
+  if(!t)return;
+  t.innerHTML=clientes.map(c=>{
+    const all=facturas.filter(f=>f.clienteId===c.id);
+    const pagadas=all.filter(f=>f.estado==='pagada');
+    const pendientes=all.filter(f=>f.estado!=='pagada');
+    const facturado=all.reduce((s,f)=>s+f.monto,0);
+    const cobrado=pagadas.reduce((s,f)=>s+f.monto,0);
+    const pendienteAmt=pendientes.reduce((s,f)=>s+f.monto,0);
+    const vencidoClient=pendientes.some(f=>f.estado==='vencida');
+    return `<tr><td>${c.nombre}</td><td>${fmtCOP(facturado)}</td><td>${fmtCOP(cobrado)}</td><td style="font-weight:500;color:${pendienteAmt>0?'#A32D2D':'var(--color-text-primary)'}">${fmtCOP(pendienteAmt)}</td><td><span class="badge ${vencidoClient?'badge-danger':pendienteAmt>0?'badge-warning':'badge-success'}">${vencidoClient?'Moroso':pendienteAmt>0?'Al día':'Sin deuda'}</span></td></tr>`;
+  }).join('');
+}
+
+function filterFacturas(filter,btn){
+  currentFilter=filter;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  if(btn)btn.classList.add('active');
+  renderFacturas('facturas-tbody',filter);
+  renderFacturas('facturas-tbody2',filter);
+}
+
+function setView(v,btn){
+  document.querySelectorAll('.views').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('view-'+v).classList.add('active');
+  if(btn)btn.classList.add('active');
+  const titles={dashboard:'Panel de cobros',facturas:'Facturas',clientes:'Clientes',recordatorios:'Recordatorios',reportes:'Reportes',ia:'Asistente IA'};
+  document.getElementById('page-title').textContent=titles[v]||v;
+  if(v==='clientes')renderClientes();
+  if(v==='recordatorios')renderRecordatorios();
+  if(v==='reportes')renderReportes();
+}
+
+let aiMessages=[];
+async function generateReminder(facturaId){
+  const f=facturas.find(x=>x.id===facturaId);
+  if(!f)return;
+  const c=getCliente(f.clienteId);
+  const dias=Math.round(Math.abs(f.vencimiento-today)/86400000);
+  const prompt=`Eres un asistente de cobros profesional. Redacta un mensaje de recordatorio de cobro para el cliente "${c.nombre}" (email: ${c.email}) por la factura ${f.id} por ${fmtCOP(f.monto)} que ${f.estado==='vencida'?`lleva ${dias} días vencida`:`vence en ${dias} días`}. El concepto es: "${f.concepto}". El tono debe ser profesional, empático y directo. Máximo 4 oraciones. No uses asteriscos ni markdown.`;
+  document.getElementById('modal-msg-text').textContent='Generando con IA...';
+  openModal('recordatorio');
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:300,messages:[{role:'user',content:prompt}]})});
+    const data=await res.json();
+    const txt=data.content?.find(b=>b.type==='text')?.text||'No se pudo generar el mensaje.';
+    document.getElementById('modal-msg-text').textContent=txt;
+    const idx=facturas.findIndex(x=>x.id===facturaId);
+    if(idx>=0)facturas[idx].recordatorios++;
+  }catch(e){document.getElementById('modal-msg-text').textContent='Error al conectar con IA. Verifica tu conexión.';}
+}
+
+async function askAI(){
+  const input=document.getElementById('ia-input');
+  const q=input.value.trim();
+  if(!q)return;
+  input.value='';
+  const chat=document.getElementById('ia-chat');
+  const resumenFacturas=facturas.map(f=>{const c=getCliente(f.clienteId);return `${f.id}: ${c.nombre}, ${fmtCOP(f.monto)}, estado: ${f.estado}`;}).join('\n');
+  chat.innerHTML+=`<div style="background:var(--color-background-secondary);padding:10px 12px;border-radius:var(--border-radius-md);margin-bottom:10px;font-size:13px">${q}</div>`;
+  const loading=document.createElement('div');
+  loading.style.cssText='font-size:13px;color:var(--color-text-secondary);padding:4px 0;margin-bottom:10px';
+  loading.textContent='Analizando...';
+  chat.appendChild(loading);
+  chat.scrollTop=chat.scrollHeight;
+  try{
+    const res=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:500,messages:[{role:'user',content:`Eres un asistente financiero especializado en cobros. Aquí están las facturas actuales:\n${resumenFacturas}\n\nPregunta: ${q}\n\nResponde de forma concisa y útil, sin usar markdown.`}]})});
+    const data=await res.json();
+    const txt=data.content?.find(b=>b.type==='text')?.text||'Sin respuesta.';
+    chat.removeChild(loading);
+    chat.innerHTML+=`<div style="border-left:2px solid #534AB7;padding:10px 12px;margin-bottom:10px;font-size:13px;color:var(--color-text-primary);line-height:1.6">${txt}</div>`;
+  }catch(e){loading.textContent='Error al conectar con IA.';}
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function quickAsk(q){
+  document.getElementById('ia-input').value=q;
+  setView('ia',document.querySelector('.nav-item:last-of-type'));
+  setTimeout(()=>askAI(),100);
+}
+
+function sendAllReminders(){
+  const pendientes=facturas.filter(f=>['vencida','proximo'].includes(f.estado));
+  if(pendientes.length===0){showToast('No hay facturas urgentes pendientes');return;}
+  showToast(`Enviando ${pendientes.length} recordatorios con IA...`);
+  pendientes.forEach(f=>{f.recordatorios++;});
+  renderFacturas('facturas-tbody',currentFilter);
+  renderFacturas('facturas-tbody2',currentFilter);
+  renderMetrics();
+}
+
+function markPaid(id){
+  const idx=facturas.findIndex(f=>f.id===id);
+  if(idx>=0){facturas[idx].estado='pagada';}
+  renderFacturas('facturas-tbody',currentFilter);
+  renderFacturas('facturas-tbody2',currentFilter);
+  renderMetrics();
+  renderAISuggestions();
+  showToast('Factura marcada como cobrada');
+}
+
+function createFactura(){
+  const c=document.getElementById('new-client').value;
+  const a=parseFloat(document.getElementById('new-amount').value);
+  const d=document.getElementById('new-due').value;
+  const concept=document.getElementById('new-concept').value;
+  if(!c||!a||!d){showToast('Completa todos los campos');return;}
+  const cliente=clientes.find(cl=>cl.nombre===c);
+  const due=new Date(d+'T12:00:00');
+  const diff=(due-today)/86400000;
+  const estado=diff<0?'vencida':diff<=7?'proximo':'pendiente';
+  const newId='F-'+String(facturas.length+1).padStart(3,'0');
+  facturas.unshift({id:newId,clienteId:cliente.id,monto:a,vencimiento:due,estado,recordatorios:0,concepto:concept||'Servicio'});
+  closeModal('nueva-factura');
+  renderFacturas('facturas-tbody',currentFilter);
+  renderFacturas('facturas-tbody2',currentFilter);
+  renderMetrics();
+  renderAISuggestions();
+  showToast('Factura creada: '+newId);
+}
+
+function confirmSend(){
+  closeModal('recordatorio');
+  renderFacturas('facturas-tbody',currentFilter);
+  renderFacturas('facturas-tbody2',currentFilter);
+  showToast('Recordatorio enviado con éxito');
+}
+
+function openModal(id){document.getElementById('modal-'+id).classList.add('open')}
+function closeModal(id){document.getElementById('modal-'+id).classList.remove('open')}
+
+let toastTimer;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toast-msg').textContent=msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open')}));
+
+renderMetrics();
+renderFacturas('facturas-tbody','all');
+renderFacturas('facturas-tbody2','all');
+renderAISuggestions();
+</script>
