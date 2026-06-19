@@ -1,3 +1,5 @@
+[![CI](https://github.com/yospinamurillo/CobrosAI/actions/workflows/ci-pages.yml/badge.svg)](https://github.com/yospinamurillo/CobrosAI/actions/workflows/ci-pages.yml)
+
 # CobrosAI
 
 **CobrosAI** es una maqueta estática de la página de aterrizaje (landing page) para un producto que automatiza y mejora la gestión de cobros usando inteligencia artificial.
@@ -16,10 +18,9 @@ python -m http.server 8000
 
 GitHub Pages
 
-Si quieres publicar la landing como sitio estático en GitHub Pages puedes hacerlo de dos maneras:
+Este repositorio incluye un workflow de GitHub Actions que valida HTML y enlaces y despliega automáticamente a GitHub Pages cuando se hace push a `main`.
 
-- Opción rápida: añade `index.html` en la raíz (ya incluido) y activa Pages en Settings → Pages → Source: branch `main` / root.
-- Alternativa (recomendado): mueve los archivos a la carpeta `/docs` y selecciona `main / docs` como fuente en Pages.
+- Sitio (cuando esté desplegado): https://yospinamurillo.github.io/CobrosAI/
 
 Capturas (placeholder)
 
@@ -27,12 +28,14 @@ Capturas (placeholder)
 
 Contenido del repositorio
 
+- `index.html` — redirección a la landing.
 - `cobrosai-landing.html` — HTML con la landing.
 - `styles.css` — CSS extraído desde el HTML para facilitar edición.
 - `README.md` — este archivo (ES / EN).
 - `LICENSE` — licencia MIT.
 - `CONTRIBUTING.md` — guía para contribuir.
 - `screenshots/preview.svg` — placeholder de captura de pantalla.
+- `.github/workflows/ci-pages.yml` — workflow que valida y despliega a Pages.
 
 Cómo contribuir
 
@@ -63,13 +66,9 @@ Preview
 
 Open `cobrosai-landing.html` in your browser or run a local static server (see commands above).
 
-GitHub Pages
+CI & Deployment
 
-To publish the site via GitHub Pages, place files in `/docs` or keep `index.html` at repository root and enable Pages in repository Settings.
-
-Contributing
-
-Please use forks and pull requests. For large changes, open an issue first.
+This repo runs a GitHub Actions workflow to validate HTML and check for broken links, then deploys the static files to GitHub Pages on pushes to `main`.
 
 License
 
