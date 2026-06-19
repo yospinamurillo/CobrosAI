@@ -1,4 +1,11 @@
-<p align="center">[![CI](https://github.com/yospinamurillo/CobrosAI/actions/workflows/ci-pages.yml/badge.svg)](https://github.com/yospinamurillo/CobrosAI/actions/workflows/ci-pages.yml) [![License](https://img.shields.io/github/license/yospinamurillo/CobrosAI)](https://github.com/yospinamurillo/CobrosAI/blob/main/LICENSE) [![Issues](https://img.shields.io/github/issues/yospinamurillo/CobrosAI)](https://github.com/yospinamurillo/CobrosAI/issues) [![PRs](https://img.shields.io/github/issues-pr/yospinamurillo/CobrosAI)](https://github.com/yospinamurillo/CobrosAI/pulls) [![Last commit](https://img.shields.io/github/last-commit/yospinamurillo/CobrosAI)](https://github.com/yospinamurillo/CobrosAI/commits) [![Stars](https://img.shields.io/github/stars/yospinamurillo/CobrosAI?style=social)](https://github.com/yospinamurillo/CobrosAI)</p>
+<p align="center">
+  <a href="https://github.com/yospinamurillo/CobrosAI/actions/workflows/ci-pages.yml"><img src="https://img.shields.io/github/actions/workflow/status/yospinamurillo/CobrosAI/ci-pages.yml?branch=main&label=ci&style=flat-square" alt="CI"></a>
+  <a href="https://github.com/yospinamurillo/CobrosAI/blob/main/LICENSE"><img src="https://img.shields.io/github/license/yospinamurillo/CobrosAI?style=flat-square" alt="License"></a>
+  <a href="https://github.com/yospinamurillo/CobrosAI/issues"><img src="https://img.shields.io/github/issues/yospinamurillo/CobrosAI?style=flat-square" alt="Issues"></a>
+  <a href="https://github.com/yospinamurillo/CobrosAI/pulls"><img src="https://img.shields.io/github/issues-pr/yospinamurillo/CobrosAI?style=flat-square" alt="PRs"></a>
+  <a href="https://github.com/yospinamurillo/CobrosAI/commits"><img src="https://img.shields.io/github/last-commit/yospinamurillo/CobrosAI?style=flat-square" alt="Last commit"></a>
+  <a href="https://github.com/yospinamurillo/CobrosAI/stargazers"><img src="https://img.shields.io/github/stars/yospinamurillo/CobrosAI?style=social" alt="Stars"></a>
+</p>
 
 # CobrosAI
 
