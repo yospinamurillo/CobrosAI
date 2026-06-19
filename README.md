@@ -1,4 +1,4 @@
-[![CI](https://github.com/yospinamurillo/CobrosAI/actions/workflows/ci-pages.yml/badge.svg)](https://github.com/yospinamurillo/CobrosAI/actions/workflows/ci-pages.yml)
+[![CI](https://github.com/yospinamurillo/CobrosAI/actions/workflows/ci-pages.yml/badge.svg)](https://github.com/yospinamurillo/CobrosAI/actions/workflows/ci-pages.yml) [![License](https://img.shields.io/github/license/yospinamurillo/CobrosAI)](https://github.com/yospinamurillo/CobrosAI/blob/main/LICENSE) [![Issues](https://img.shields.io/github/issues/yospinamurillo/CobrosAI)](https://github.com/yospinamurillo/CobrosAI/issues) [![PRs](https://img.shields.io/github/issues-pr/yospinamurillo/CobrosAI)](https://github.com/yospinamurillo/CobrosAI/pulls) [![Last commit](https://img.shields.io/github/last-commit/yospinamurillo/CobrosAI)](https://github.com/yospinamurillo/CobrosAI/commits) [![Stars](https://img.shields.io/github/stars/yospinamurillo/CobrosAI?style=social)](https://github.com/yospinamurillo/CobrosAI)
 
 # CobrosAI
 
@@ -60,7 +60,7 @@ EN — English version
 
 # CobrosAI
 
-CobrosAI is a static landing page mockup for a product that automates invoice collection using AI. This repository contains the HTML and CSS for the landing page and simple workflow notes to help you get started.
+CobrosAI is a static landing page mockup for a product that automates invoice collection using AI. This repository contains the HTML and CSS for the landing page and simple workflow notes to help you [...]
 
 Preview
 
