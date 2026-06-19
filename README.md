@@ -7,6 +7,8 @@
   <a href="https://github.com/yospinamurillo/CobrosAI/stargazers"><img src="https://img.shields.io/github/stars/yospinamurillo/CobrosAI?style=social" alt="Stars"></a>
 </p>
 
+<p align="center"><a href="cobros_saas_app.html"><img src="screenshots/cobros_saas_app_preview.svg" alt="Preview cobros_saas_app" width="900"></a></p>
+
 # CobrosAI
 
 **CobrosAI** es una maqueta estática de la página de aterrizaje (landing page) para un producto que automatiza y mejora la gestión de cobros usando inteligencia artificial.
